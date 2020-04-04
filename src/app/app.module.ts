@@ -6,12 +6,13 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {MaterialModule} from './material.module';
-import { SignupComponent } from './auth/signup/signup.component';
-import { LoginComponent } from './auth/login/login.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { CategoryComponent } from './forms/category/category.component';
-import { InstitutionComponent } from './forms/institution/institution.component';
-import { DonationComponent } from './forms/donation/donation.component';
+import {SignupComponent} from './auth/signup/signup.component';
+import {LoginComponent} from './auth/login/login.component';
+import {LandingPageComponent} from './landing-page/landing-page.component';
+import {CategoryComponent} from './forms/category/category.component';
+import {InstitutionComponent} from './forms/institution/institution.component';
+import {DonationComponent} from './forms/donation/donation.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { DonationComponent } from './forms/donation/donation.component';
     BrowserAnimationsModule,
     MaterialModule,
     AppRoutingModule,
-  ],
+    FormsModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
