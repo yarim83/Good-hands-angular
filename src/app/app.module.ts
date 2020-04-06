@@ -12,7 +12,8 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
 import {CategoryComponent} from './forms/category/category.component';
 import {InstitutionComponent} from './forms/institution/institution.component';
 import {DonationComponent} from './forms/donation/donation.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,8 @@ import {FormsModule} from '@angular/forms';
     MaterialModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]
