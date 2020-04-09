@@ -1,0 +1,4 @@
+class Donation {
+  id: number;
+
+}
