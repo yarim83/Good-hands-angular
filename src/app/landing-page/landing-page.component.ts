@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DonationService} from '../services/donation.service';
-import {Observable} from 'rxjs';
 import {InstitutionService} from '../services/institution.service';
+import {Institution} from '../models/institution';
 
 @Component({
   selector: 'app-landing-page',

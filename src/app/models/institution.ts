@@ -1,4 +1,4 @@
-class Institution {
+export class Institution {
   id: number;
   name: string;
   description: string;
