@@ -8,6 +8,7 @@ import {InstitutionService} from '../../services/institution.service';
 import {Donation} from '../../models/donation';
 import {Category} from '../../models/category';
 import {Institution} from '../../models/institution';
+import {error} from 'util';
 
 
 @Component({
@@ -22,7 +23,10 @@ export class DonationComponent implements OnInit {
   private institutionList: Array<Institution>;
   private activeClass = 'active';
   private form: FormGroup;
+  submitted = false;
+  errors = false;
   private formDataStep: number = 1;
+  private donationCreated: boolean;
 
   constructor(private donationService: DonationService,
               private categoryService: CategoryService,
@@ -33,16 +37,16 @@ export class DonationComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      categoryCheckArray: this.formBuilder.array([]),
-      bags: new FormControl(null),
-      insitution: new FormControl(null),
-      street: new FormControl(null),
-      city: new FormControl(null),
-      zipCode: new FormControl(null),
-      phone: new FormControl(null),
-      pickUpDate: new FormControl(null),
-      pickUpTime: new FormControl(null),
-      pickUpComment: new FormControl(null)
+      categoryCheckArray: this.formBuilder.array([], [Validators.required]),
+      bags: ['', [Validators.required]],
+      insitution: ['', [Validators.required]],
+      street: ['', [Validators.required, Validators.minLength(4)]],
+      city:['', [Validators.required, Validators.minLength(4)]],
+      zipCode: ['', [Validators.required, Validators.pattern('[0-9]{2}-[0-9]{3}')]],
+      phone: ['', [Validators.required, Validators.pattern('[0-9]{9}')]],
+      pickUpDate: ['', [Validators.required]],
+      pickUpTime: ['', [Validators.required]],
+      pickUpComment: ['', [Validators.required, Validators.minLength(10)]]
     });
     this.reloadData();
   }
@@ -52,13 +56,35 @@ export class DonationComponent implements OnInit {
     this.getInstitutionList();
   }
 
+  get formControls() {
+    return this.form.controls;
+  }
+
   onSubmit() {
-    this.assingFormToDonationDto();
+    this.submitted = true;
+    if (this.form.invalid) {
+      this.errors = true;
+      return;
+    } else {
+      this.errors = false;
+      this.assingFormToDonationDto();
+      this.addDonation();
+    }
+
+  }
+
+  addDonation() {
+    this.donationService.addDonation(this.donationDto)
+      .subscribe(data => {
+        this.donationCreated = true;
+        console.log(data);
+      }, error => {
+        this.donationCreated = false;
+        console.log(error.error.message);
+      });
   }
 
   gotoIndex() {
-    this.onSubmit();
-    console.log(this.form);
     this.router.navigate(['']);
   }
 
@@ -105,7 +131,6 @@ export class DonationComponent implements OnInit {
   }
 
   assingFormToDonationDto() {
-    console.log(this.form.value);
     this.donationDto.city = this.form.value.city;
     this.donationDto.zipCode = this.form.value.zipCode;
     this.donationDto.institutionId = this.form.value.insitution.id;
@@ -113,7 +138,9 @@ export class DonationComponent implements OnInit {
     this.donationDto.pickUpDate = this.form.value.pickUpDate;
     this.donationDto.pickUpTime = this.form.value.pickUpTime;
     this.donationDto.categoryIds = this.form.value.categoryCheckArray;
-    console.log(this.donationDto);
+    this.donationDto.street = this.form.value.street;
+    this.donationDto.phone = this.form.value.phone;
+    this.donationDto.quantity = this.form.value.bags;
   }
 
   generateDonation() {

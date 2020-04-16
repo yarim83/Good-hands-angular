@@ -63,14 +63,16 @@
               [name]="category.name"
               (change)="onCheckboxChange($event)"
               id="categories"
-            />
+              [ngClass]="{'is-invalid': submitted && formControls.categoryCheckArray.errors}"/>
             <span class="checkbox"></span>
             <span class="description"
-            >{{category.name}}</span
-            >
+            >{{category.name}}</span>
           </label>
-        </div>
 
+        </div>
+        <div *ngIf="submitted && formControls.categoryCheckArray.errors" class="invalid-feedback">
+          <div *ngIf="submitted && formControls.categoryCheckArray.errors.required">Pole wymagane</div>
+        </div>
 
         <div class="form-group form-group--buttons">
           <button type="button" class="btn next-step" (click)="nextStep()">Dalej</button>
@@ -89,13 +91,19 @@
               id="bags"
               formControlName="bags"
               step="1"
-              min="1"/>
+              min="1"
+              [ngClass]="{'is-invalid': submitted && formControls.bags.errors}"
+            />
           </label>
+          <div *ngIf="submitted && formControls.bags.errors" class="invalid-feedback">
+            <div *ngIf="submitted && formControls.bags.errors.required">Pole wymagane</div>
+          </div>
         </div>
 
+
         <div class="form-group form-group--buttons">
-          <button  type="button" class="btn prev-step" (click)="prevStep()">Wstecz</button>
-          <button  type="button" class="btn next-step" (click)="nextStep()">Dalej</button>
+          <button type="button" class="btn prev-step" (click)="prevStep()">Wstecz</button>
+          <button type="button" class="btn next-step" (click)="nextStep()">Dalej</button>
         </div>
       </div>
 
@@ -109,7 +117,9 @@
               type="radio"
               id="insitution"
               formControlName="insitution"
-              [value]="institution"/>
+              [value]="institution"
+              [ngClass]="{'is-invalid': submitted &&  formControls.insitution.errors}"
+            />
             <span class="checkbox radio"></span>
             <span class="description">
                   <div class="title">{{institution.name}}</div>
@@ -117,10 +127,13 @@
                 </span>
           </label>
         </div>
+        <div *ngIf="submitted && formControls.insitution.errors" class="invalid-feedback">
+          <div *ngIf="submitted && formControls.insitution.errors.required">Pole wymagane</div>
+        </div>
 
         <div class="form-group form-group--buttons">
-          <button  type="button" class="btn prev-step" (click)="prevStep()">Wstecz</button>
-          <button  type="button" class="btn next-step" (click)="nextStep()">Dalej</button>
+          <button type="button" class="btn prev-step" (click)="prevStep()">Wstecz</button>
+          <button type="button" class="btn next-step" (click)="nextStep()">Dalej</button>
         </div>
       </div>
 
@@ -136,7 +149,14 @@
                 <input
                   type="text"
                   id="street"
-                  formControlName="street"/> </label>
+                  formControlName="street"
+                  [ngClass]="{'is-invalid': submitted && formControls.street.errors}"
+                />
+              </label>
+              <div *ngIf="submitted && formControls.street.errors" class="invalid-feedback">
+                <div *ngIf="submitted && formControls.street.errors.required">Pole wymagane</div>
+                <div *ngIf="submitted && formControls.street.errors.minlength">Zbyt mała ilość znaków</div>
+              </div>
             </div>
 
             <div class="form-group form-group--inline">
@@ -144,7 +164,14 @@
                 <input
                   type="text"
                   id="city"
-                  formControlName="city"/> </label>
+                  formControlName="city"
+                  [ngClass]="{'is-invalid': formControls.city.errors}"
+                />
+              </label>
+              <div *ngIf="submitted && formControls.city.errors" class="invalid-feedback">
+                <div *ngIf="submitted && formControls.city.errors.required">Pole wymagane</div>
+                <div *ngIf="submitted && formControls.city.errors.minlength">Zbyt mała ilość znaków</div>
+              </div>
             </div>
 
             <div class="form-group form-group--inline">
@@ -153,8 +180,14 @@
                 <input
                   type="text"
                   id="zipCode"
-                  formControlName="zipCode"/>
+                  formControlName="zipCode"
+                  [ngClass]="{'is-invalid': formControls.zipCode.errors}"
+                />
               </label>
+              <div *ngIf="submitted && formControls.zipCode.errors" class="invalid-feedback">
+                <div *ngIf="submitted && formControls.zipCode.errors.required">Pole wymagane</div>
+                <div *ngIf="submitted && formControls.zipCode.errors.pattern">Nieprawidłowy format</div>
+              </div>
             </div>
 
             <div class="form-group form-group--inline">
@@ -163,8 +196,14 @@
                 <input
                   type="phone"
                   id="phone"
-                  formControlName="phone"/>
+                  formControlName="phone"
+                  [ngClass]="{'is-invalid': formControls.phone.errors}"
+                />
               </label>
+              <div *ngIf="submitted && formControls.phone.errors" class="invalid-feedback">
+                <div *ngIf="submitted && formControls.phone.errors.required">Pole wymagane</div>
+                <div *ngIf="submitted && formControls.phone.errors.pattern">Wprowadzono nieprawidlowy format</div>
+              </div>
             </div>
           </div>
 
@@ -175,7 +214,12 @@
                 <input
                   type="date"
                   id="pickUpDate"
-                  formControlName="pickUpDate"/> </label>
+                  formControlName="pickUpDate" [ngClass]="{'is-invalid': submitted && formControls.pickUpDate.errors}"
+                />
+              </label>
+              <div *ngIf="submitted && formControls.pickUpDate.errors" class="invalid-feedback">
+                <div *ngIf="submitted && formControls.pickUpDate.errors.required">Pole wymagane</div>
+              </div>
             </div>
 
             <div class="form-group form-group--inline">
@@ -183,7 +227,12 @@
                 <input
                   type="time"
                   id="pickUpTime"
-                  formControlName="pickUpTime"/> </label>
+                  formControlName="pickUpTime" [ngClass]="{'is-invalid': submitted && formControls.pickUpTime.errors}"
+                />
+              </label>
+              <div *ngIf="submitted && formControls.pickUpTime.errors" class="invalid-feedback">
+                <div *ngIf="submitted && formControls.pickUpTime.errors.required">Pole wymagane</div>
+              </div>
             </div>
 
             <div class="form-group form-group--inline">
@@ -192,14 +241,19 @@
                 <textarea
                   id="pickUpComment"
                   formControlName="pickUpComment"
-                  rows="5"></textarea>
+                  rows="5" [ngClass]="{'is-invalid': submitted && formControls.pickUpComment.errors}"
+                ></textarea>
               </label>
+              <div *ngIf="submitted && formControls.pickUpComment.errors" class="mat-warn">
+                <div *ngIf="submitted && formControls.pickUpComment.errors.required">Pole wymagane</div>
+                <div *ngIf="submitted && formControls.pickUpComment.errors.minlength">Zbyt mała ilość znaków</div>
+              </div>
             </div>
           </div>
         </div>
         <div class="form-group form-group--buttons">
-          <button  type="button" class="btn prev-step" (click)="prevStep()">Wstecz</button>
-          <button  type="button" class="btn next-step" (click)="generateDonation()">Dalej</button>
+          <button type="button" class="btn prev-step" (click)="prevStep()">Wstecz</button>
+          <button type="button" class="btn next-step" (click)="generateDonation()">Dalej</button>
         </div>
       </div>
 
@@ -221,7 +275,7 @@
               <li>
                 <span class="icon icon-hand"></span>
                 <span class="summary--text"
-                >{{form.value['insitution']}}</span
+                >{{form.value['insitution'].name}}</span
                 >
               </li>
             </ul>
@@ -231,9 +285,9 @@
             <div class="form-section--column">
               <h4>Adres odbioru:</h4>
               <ul>
-                <li>{{form.value['address']}}</li>
+                <li>{{form.value['street']}}</li>
                 <li>{{form.value['city']}}</li>
-                <li>{{form.value['postcode']}}</li>
+                <li>{{form.value['zipCode']}}</li>
                 <li>{{form.value['phone']}}</li>
               </ul>
             </div>
@@ -241,17 +295,32 @@
             <div class="form-section--column">
               <h4>Termin odbioru:</h4>
               <ul>
-                <li>{{form.value['data']}}</li>
-                <li>{{form.value['time']}}</li>
-                <li>{{form.value['moreInfo']}}</li>
+                <li>{{form.value['pickUpDate']}}</li>
+                <li>{{form.value['pickUpTime']}}</li>
+                <li>{{form.value['pickUpComment']}}</li>
               </ul>
             </div>
           </div>
         </div>
 
         <div class="form-group form-group--buttons">
-          <button  type="button" class="btn prev-step" (click)="prevStep()">Wstecz</button>
-          <button type="submit" (click)="gotoIndex()" class="btn">Potwierdzam</button>
+          <button type="button" class="btn prev-step" (click)="prevStep()">Wstecz</button>
+          <button type="submit" class="btn">Potwierdzam</button>
+        </div>
+        <div class="alert alert-success" role="alert" *ngIf="submitted && !errors">
+          <h4 class="alert-heading">Gratulacje !!</h4>
+          <p>Poprawny zapis, <a (click)="gotoIndex()">wróć do listy</a>. Dziękuję ;)</p>
+          <hr/>
+          <button class="btn btn-outline-secondary" type="button" (click)="gotoIndex()">Powrót</button>
+        </div>
+<!--        <div class="alert alert-danger" role="alert" *ngIf="donationCreated">-->
+<!--          <h4 class="alert-heading">Coś poszło nie tak</h4>-->
+<!--          <p><a (click)="gotoIndex()">wróć do listy</a>. Dziękuję ;)</p>-->
+<!--          <hr/>-->
+<!--          <button class="btn btn-outline-secondary" type="button" (click)="gotoIndex()">Powrót</button>-->
+<!--        </div>-->
+        <div class="alert alert-danger" role="alert" *ngIf="errors">
+          <h4 class="alert-heading">Coś poszło nie tak. Zweryfikuj formularz</h4>
         </div>
       </div>
     </form>
